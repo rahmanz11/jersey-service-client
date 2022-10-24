@@ -205,33 +205,35 @@ public class Repository implements Serializable {
   }
 
   /**
-   * Addss student to the group
-   * 
-   * @param Student
-   * @param Group
+   * Adds a student to a group
+   * @param student
+   * @param group
+   * @return
    */
-  public static void addStudentToTheGroup(Student student, Group group) {
+  public static String addStudentToTheGroup(Student student, Group group) {
     removeStudentFromTheGroup(student, group);
     studentAndGroup.add(new StudentAndGroup(student, group));
+    return "Success";
   }
 
   /**
-   * Removes student from the group
-   * 
-   * @param Group
-   * @param Group
+   * Removes a student from a group
+   * @param student
+   * @param group
+   * @return
    */
-  public static void removeStudentFromTheGroup(Student student, Group group) {
+  public static String removeStudentFromTheGroup(Student student, Group group) {
     studentAndGroup.removeIf(sg -> sg.getGroup().getId() == student.getId() && sg.getGroup().getId() == group.getId());
+    return "Success";
   }
 
   /**
-   * Joint a group with subjects
-   * 
-   * @param Group
-   * @param Set<Subject>
+   * Join a group with subjects
+   * @param group
+   * @param subjects
+   * @return
    */
-  public static void jointGroupWithSubjects(Group group, Set<Subject> subjects) {
+  public static String jointGroupWithSubjects(Group group, Set<Subject> subjects) {
     AtomicBoolean added = new AtomicBoolean(false);
     groupAndSubjects.forEach(gs -> {
       if (gs.getGroup().getId() == group.getId()) {
@@ -242,55 +244,59 @@ public class Repository implements Serializable {
     if (!added.get()) {
       groupAndSubjects.add(new GroupAndSubjects(group, subjects));
     }
+    return "Success";
   }
 
   /**
-   * Disjoint a group with subjects
-   * 
-   * @param Group
-   * @param Set<Subject>
+   * Remove link between group and subject
+   * @param group
+   * @param subjects
+   * @return
    */
-  public static void disjointGroupFromSubjects(Group group, Set<Subject> subjects) {
+  public static String disjointGroupFromSubjects(Group group, Set<Subject> subjects) {
     groupAndSubjects.forEach(gs -> {
       if (gs.getGroup().getId() == group.getId()) {
         gs.getSubjects().removeAll(subjects);
       }
     });
+    return "Success";
   }
 
   /**
    * Give note in a subject to a student
-   * 
-   * @param Student
-   * @param Subject
+   * @param student
+   * @param subject
    * @param note
+   * @return
    */
-  public static void giveNoteInASubjectToAStudent(Student student, Subject subject, Integer note) {
+  public static String giveNoteInASubjectToAStudent(Student student, Subject subject, Integer note) {
     notes.add(new Note(student, subject, note));
+    return "Success";
   }
 
   /**
    * Modify note in a subject to a student
-   * 
-   * @param Student
-   * @param Subject
+   * @param student
+   * @param subject
    * @param note
+   * @return
    */
-  public static void modifyNoteInASubjectToAStudent(Student student, Subject subject, Integer note) {
+  public static String modifyNoteInASubjectToAStudent(Student student, Subject subject, Integer note) {
     notes.forEach(n -> {
       if (n.getStudent().getId() == student.getId() && n.getSubject().getId() == subject.getId()) {
         n.setNote(note);
       }
     });
+    return "Success";
   }
 
   /**
    * Delete note in a subject to a student
-   * 
-   * @param Student
-   * @param Subject
+   * @param student
+   * @param subject
+   * @return
    */
-  public static void deleteNoteInASubjectOfAStudent(Student student, Subject subject) {
+  public static String deleteNoteInASubjectOfAStudent(Student student, Subject subject) {
     Iterator<Note> nIterator = notes.iterator();
     while (nIterator.hasNext()) {
       Note n = nIterator.next();
@@ -298,5 +304,6 @@ public class Repository implements Serializable {
         nIterator.remove();
       }
     }
+    return "Success";
   }
 }

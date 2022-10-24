@@ -12,7 +12,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import alom.server.payload.Group;
+import alom.server.payload.GroupAndSubjects;
+import alom.server.payload.Note;
 import alom.server.payload.Student;
+import alom.server.payload.StudentAndGroup;
 import alom.server.payload.Subject;
 import alom.server.repository.Repository;
 
@@ -73,7 +76,7 @@ public class ServerResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteSudent(Student student) {
         Student deleted = Repository.deleteStudent(student);
-        return Response.status(200).entity(deleted).build();
+        return Response.status(204).entity(deleted).build();
     }
         
     /**
@@ -128,7 +131,7 @@ public class ServerResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteSubject(Subject subject) {
         Subject deleted = Repository.deleteSubject(subject);
-        return Response.status(200).entity(deleted).build();
+        return Response.status(204).entity(deleted).build();
     }
 
     /**
@@ -183,6 +186,104 @@ public class ServerResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteGroup(Group group) {
         Group deleted = Repository.deleteGroup(group);
-        return Response.status(200).entity(deleted).build();
+        return Response.status(204).entity(deleted).build();
+    }
+
+    /**
+     * Adds a student to the group
+     * @param Group
+     * @return
+     */
+    @POST
+    @Path("/group/student/add")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addStudentToTheGroup(StudentAndGroup studentAndGroup) {
+        String message = Repository.addStudentToTheGroup(studentAndGroup.getStudent(), studentAndGroup.getGroup());
+        return Response.status(201).entity(message).build();
+    }
+
+    /**
+     * Remove a student from the group
+     * @param Group
+     * @return
+     */
+    @DELETE
+    @Path("/group/student/remove")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response removeStudentFromTheGroup(StudentAndGroup studentAndGroup) {
+        String message = Repository.removeStudentFromTheGroup(studentAndGroup.getStudent(), studentAndGroup.getGroup());
+        return Response.status(204).entity(message).build();
+    }
+    
+    /**
+     * Joint group with subjects
+     * @param GroupAndSubjects
+     * @return
+     */
+    @POST
+    @Path("/group/subjects/add")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response jointGroupWithSubjects(GroupAndSubjects groupAndSubjects) {
+        String message = Repository.jointGroupWithSubjects(groupAndSubjects.getGroup(), groupAndSubjects.getSubjects());
+        return Response.status(201).entity(message).build();
+    }
+
+    /**
+     * Remove link between group and subject
+     * @param GroupAndSubjects
+     * @return
+     */
+    @DELETE
+    @Path("/group/subjects/remove")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response disjointGroupFromSubjects(GroupAndSubjects groupAndSubjects) {
+        String message = Repository.disjointGroupFromSubjects(groupAndSubjects.getGroup(), groupAndSubjects.getSubjects());
+        return Response.status(204).entity(message).build();
+    }
+
+    /**
+     * Give note
+     * @param Note
+     * @return
+     */
+    @POST
+    @Path("/student/subject/note/add")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response giveNoteInASubjectToAStudent(Note note) {
+        String message = Repository.giveNoteInASubjectToAStudent(note.getStudent(), note.getSubject(), note.getNote());
+        return Response.status(201).entity(message).build();
+    }
+
+    /**
+     * Update note
+     * @param Note
+     * @return
+     */
+    @PUT
+    @Path("/student/subject/note/update")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response modifyNoteInASubjectToAStudent(Note note) {
+        String message = Repository.modifyNoteInASubjectToAStudent(note.getStudent(), note.getSubject(), note.getNote());
+        return Response.status(200).entity(message).build();
+    }
+    
+    /**
+     * Delete note
+     * @param Note
+     * @return
+     */
+    @DELETE
+    @Path("/student/subject/note/delete")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteNoteInASubjectOfAStudent(Note note) {
+        String message = Repository.deleteNoteInASubjectOfAStudent(note.getStudent(), note.getSubject());
+        return Response.status(204).entity(message).build();
     }
 }
