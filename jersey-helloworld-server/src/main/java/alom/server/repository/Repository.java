@@ -27,9 +27,9 @@ public class Repository implements Serializable {
   static int groupId = 1;
 
   /**
-   * Add new student to the hash
-   * 
-   * @param Student
+   * Add a new student
+   * @param student
+   * @return
    */
   public static Student addStudent(Student student) {
     student.setId(studentId++);
@@ -55,27 +55,35 @@ public class Repository implements Serializable {
 
   /**
    * Updates a student
-   * 
    * @param Student
+   * @return
    */
-  public static void updateStudent(Student student) {
+  public static Student updateStudent(Student student) {
+    Student response = null;
     for (Student std : students) {
       if (std.getId() == student.getId()) {
         std.setName(student.getName());
         std.setSurName(student.getSurName());
+        response = std;
+        break;
       }
     }
+
+    return response;
   }
 
   /**
    * Deletes a student
-   * 
    * @param Student
+   * @return
    */
-  public static void deleteStudent(Student student) {
+  public static Student deleteStudent(Student student) {
     if (students.size() > 0) {
       students.remove(student);
+      return student;
     }
+
+    return null;
   }
 
   /**
