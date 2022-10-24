@@ -87,52 +87,62 @@ public class Repository implements Serializable {
   }
 
   /**
-   * Add new subject to the hash
-   * 
-   * @param Subject
+   * Adds a subject
+   * @param subject
+   * @return
    */
-  public static void addSubject(Subject subject) {
+  public static Subject addSubject(Subject subject) {
     subject.setId(subjectId++);
     subjects.add(subject);
+    return subject;
   }
 
   /**
-   * Returns a subject
+   * Returns a subjet
    * 
    * @param Subject
    * @return
    */
-  public static Subject getSubject(Subject subject) {
-    for (Subject sub : subjects) {
-      if (sub.getId() == subject.getId()) {
-        return sub;
-      }
+  public static Subject getSubject(int subjectId) {
+    Optional<Subject> available = subjects.stream().filter(s -> s.getId() == subjectId).findFirst();
+    try {
+      return available.get();
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
     }
-    return null;
   }
 
   /**
    * Updates a subject
-   * 
    * @param Subject
+   * @return
    */
-  public static void updateSubject(Subject subject) {
+  public static Subject updateSubject(Subject subject) {
+    Subject response = null;
     for (Subject sub : subjects) {
       if (sub.getId() == subject.getId()) {
         sub.setName(subject.getName());
+        response = sub;
+        break;
       }
     }
+
+    return response;
   }
 
   /**
    * Deletes a subject
-   * 
    * @param Subject
+   * @return
    */
-  public static void deleteSubject(Subject subject) {
+  public static Subject deleteSubject(Subject subject) {
     if (subjects.size() > 0) {
       subjects.remove(subject);
+      return subject;
     }
+
+    return null;
   }
 
   /**
