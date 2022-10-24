@@ -1,7 +1,8 @@
 package alom.server.payload;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.Set;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,5 +13,5 @@ import lombok.Setter;
 public class Result implements Serializable {
     private Student student;
     private Group group;
-    private Map<Subject, Integer> subjectAndNote;
+    private Set<SubjectAndNote> subjectAndNote;
 }

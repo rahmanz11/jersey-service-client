@@ -343,7 +343,8 @@ public class ResourceClient {
 		Student student = new Student(1, "Adam", "Smith");
 		int mark = 100;
 		Subject subject = new Subject(1, "History");
-		Note note = new Note(student, subject, mark);
+		SubjectAndNote subjectAndNote = new SubjectAndNote(subject, mark);
+		Note note = new Note(student, subjectAndNote);
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, note);
 		String output = response.getEntity(String.class);
 		System.out.println("Output from Server .... \n");
@@ -360,7 +361,8 @@ public class ResourceClient {
 		Student student = new Student(1, "Adam", "Smith");
 		int mark = 90;
 		Subject subject = new Subject(1, "History");
-		Note note = new Note(student, subject, mark);
+		SubjectAndNote subjectAndNote = new SubjectAndNote(subject, mark);
+		Note note = new Note(student, subjectAndNote);
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, note);
 		String output = response.getEntity(String.class);
 		System.out.println("Output from Server .... \n");
@@ -377,7 +379,8 @@ public class ResourceClient {
 		Student student = new Student(1, "Adam", "Smith");
 		int mark = 90;
 		Subject subject = new Subject(1, "History");
-		Note note = new Note(student, subject, mark);
+		SubjectAndNote subjectAndNote = new SubjectAndNote(subject, mark);
+		Note note = new Note(student, subjectAndNote);
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).delete(ClientResponse.class, note);
 		String output = response.getEntity(String.class);
 		System.out.println("Output from Server .... \n");

@@ -11,6 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Note {
 	private Student student;
-	private Subject subject;
-	private Integer note;
+	private SubjectAndNote subjectAndNote;
 }

@@ -18,6 +18,7 @@ import alom.server.payload.Results;
 import alom.server.payload.Student;
 import alom.server.payload.StudentAndGroup;
 import alom.server.payload.Subject;
+import alom.server.payload.SubjectAndNote;
 
 public class Repository implements Serializable {
   static Set<Student> students = new HashSet<>();
@@ -276,7 +277,7 @@ public class Repository implements Serializable {
    * @return
    */
   public static String giveNoteInASubjectToAStudent(Student student, Subject subject, Integer note) {
-    notes.add(new Note(student, subject, note));
+    notes.add(new Note(student, new SubjectAndNote(subject, note)));
     return "Success";
   }
 
@@ -289,8 +290,8 @@ public class Repository implements Serializable {
    */
   public static String modifyNoteInASubjectToAStudent(Student student, Subject subject, Integer note) {
     notes.forEach(n -> {
-      if (n.getStudent().getId() == student.getId() && n.getSubject().getId() == subject.getId()) {
-        n.setNote(note);
+      if (n.getStudent().getId() == student.getId() && n.getSubjectAndNote().getSubject().getId() == subject.getId()) {
+        n.getSubjectAndNote().setNote(note);
       }
     });
     return "Success";
@@ -306,7 +307,7 @@ public class Repository implements Serializable {
     Iterator<Note> nIterator = notes.iterator();
     while (nIterator.hasNext()) {
       Note n = nIterator.next();
-      if (n.getStudent().getId() == student.getId() && n.getSubject().getId() == subject.getId()) {
+      if (n.getStudent().getId() == student.getId() && n.getSubjectAndNote().getSubject().getId() == subject.getId()) {
         nIterator.remove();
       }
     }
@@ -315,7 +316,7 @@ public class Repository implements Serializable {
 
   public static Results showResults() {
     Results results = null;
-    List<Result> resultList = new ArrayList<>();
+    Set<Result> resultList = new HashSet<>();
     for (Student std : students) {
       Result result = new Result();
       result.setStudent(std);
@@ -325,13 +326,13 @@ public class Repository implements Serializable {
           for (GroupAndSubjects gs : groupAndSubjects) {
             if (gs.getGroup().getId() == sg.getGroup().getId()) {
               for (Subject sub : gs.getSubjects()) {
-                Map<Subject, Integer> map = new HashMap<>();
+                Set<SubjectAndNote> subjectAndNotes = new HashSet<>();
                 for (Note note : notes) {
-                  if (note.getStudent().getId() == std.getId() && note.getSubject().getId() == sub.getId()) {
-                    map.put(sub, note.getNote());
+                  if (note.getStudent().getId() == std.getId() && note.getSubjectAndNote().getSubject().getId() == sub.getId()) {
+                    subjectAndNotes.add(new SubjectAndNote(sub, note.getSubjectAndNote().getNote()));
                   }
                 }
-                result.setSubjectAndNote(map); 
+                result.setSubjectAndNote(subjectAndNotes);
               }
             }
           }

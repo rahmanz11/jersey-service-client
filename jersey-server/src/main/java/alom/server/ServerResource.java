@@ -259,7 +259,7 @@ public class ServerResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response giveNoteInASubjectToAStudent(Note note) {
-        String message = Repository.giveNoteInASubjectToAStudent(note.getStudent(), note.getSubject(), note.getNote());
+        String message = Repository.giveNoteInASubjectToAStudent(note.getStudent(), note.getSubjectAndNote().getSubject(), note.getSubjectAndNote().getNote());
         return Response.status(201).entity(message).build();
     }
 
@@ -273,7 +273,7 @@ public class ServerResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modifyNoteInASubjectToAStudent(Note note) {
-        String message = Repository.modifyNoteInASubjectToAStudent(note.getStudent(), note.getSubject(), note.getNote());
+        String message = Repository.modifyNoteInASubjectToAStudent(note.getStudent(), note.getSubjectAndNote().getSubject(), note.getSubjectAndNote().getNote());
         return Response.status(200).entity(message).build();
     }
     
@@ -287,7 +287,7 @@ public class ServerResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteNoteInASubjectOfAStudent(Note note) {
-        String message = Repository.deleteNoteInASubjectOfAStudent(note.getStudent(), note.getSubject());
+        String message = Repository.deleteNoteInASubjectOfAStudent(note.getStudent(), note.getSubjectAndNote().getSubject());
         return Response.status(204).entity(message).build();
     }
         

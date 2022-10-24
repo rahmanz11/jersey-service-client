@@ -1,7 +1,7 @@
 package alom.server.payload;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,5 +13,5 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Results implements Serializable {
-    private List<Result> results;    
+    private Set<Result> results;    
 }

@@ -1,5 +1,7 @@
 package alom.server.payload;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Note {
-	private Student student;
-	private SubjectAndNote subjectAndNote;
+public class SubjectAndNote implements Serializable {
+    private Subject subject;
+	private Integer note;
 }
