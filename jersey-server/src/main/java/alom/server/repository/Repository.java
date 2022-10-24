@@ -146,52 +146,62 @@ public class Repository implements Serializable {
   }
 
   /**
-   * Add new group to the hash
-   * 
-   * @param Group
-   */
-  public static void addGroup(Group group) {
-    group.setId(groupId++);
-    groups.add(group);
-  }
-
-  /**
-   * Returns a group
-   * 
+   * Adds a group
    * @param Group
    * @return
    */
-  public static Group getGroup(Group group) {
-    for (Group grp : groups) {
-      if (grp.getId() == group.getId()) {
-        return grp;
-      }
+  public static Group addGroup(Group group) {
+    group.setId(groupId++);
+    groups.add(group);
+    return group;
+  }
+
+
+  /**
+   * Returns a group
+   * @param Group
+   * @return
+   */
+  public static Group getGroup(int groupId) {
+    Optional<Group> available = groups.stream().filter(s -> s.getId() == groupId).findFirst();
+    try {
+      return available.get();
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
     }
-    return null;
   }
 
   /**
    * Updates a group
-   * 
    * @param Group
+   * @return
    */
-  public static void updateGroup(Group group) {
+  public static Group updateGroup(Group group) {
+    Group response = null;
     for (Group grp : groups) {
       if (grp.getId() == group.getId()) {
         grp.setName(group.getName());
+        response = grp;
+        break;
       }
     }
+
+    return response;
   }
 
   /**
    * Deletes a group
-   * 
    * @param Group
+   * @return
    */
-  public static void deleteGroup(Group group) {
+  public static Group deleteGroup(Group group) {
     if (groups.size() > 0) {
       groups.remove(group);
+      return group;
     }
+
+    return null;
   }
 
   /**

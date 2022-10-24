@@ -1,14 +1,17 @@
 package alom.server;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import alom.server.payload.Group;
 import alom.server.payload.Student;
 import alom.server.payload.Subject;
 import alom.server.repository.Repository;
@@ -16,7 +19,7 @@ import alom.server.repository.Repository;
 /** Example resource class hosted at the URI path "/resource"
  */
 @Path("/resource")
-public class MyResource {
+public class ServerResource {
     
     /**
      * Get a student
@@ -50,7 +53,7 @@ public class MyResource {
      * @param student
      * @return
      */
-    @POST
+    @PUT
     @Path("/student/update")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -64,7 +67,7 @@ public class MyResource {
      * @param student
      * @return
      */
-    @POST
+    @DELETE
     @Path("/student/delete")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -105,7 +108,7 @@ public class MyResource {
      * @param Subject
      * @return
      */
-    @POST
+    @PUT
     @Path("/subject/update")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -119,12 +122,67 @@ public class MyResource {
      * @param subject
      * @return
      */
-    @POST
+    @DELETE
     @Path("/subject/delete")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteSubject(Subject subject) {
         Subject deleted = Repository.deleteSubject(subject);
+        return Response.status(200).entity(deleted).build();
+    }
+
+    /**
+     * Get a group
+     * @param Group
+     * @return
+     */
+    @GET 
+    @Path("/group/get")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getGroup(@QueryParam(value = "id") String id) {
+        Group get = Repository.getGroup(Integer.valueOf(id));
+        return Response.status(200).entity(get).build();
+    }
+    
+    /**
+     * Add a new group
+     * @param Group
+     * @return
+     */
+    @POST 
+    @Path("/group/add")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addGroup(Group group) {
+        Group added = Repository.addGroup(group);
+        return Response.status(201).entity(added).build();
+    }
+        
+    /**
+     * Updates a group
+     * @param Group
+     * @return
+     */
+    @PUT
+    @Path("/group/update")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateGroup(Group group) {
+        Group updated = Repository.updateGroup(group);
+        return Response.status(200).entity(updated).build();
+    }
+
+    /**
+     * Deletes a group
+     * @param Group
+     * @return
+     */
+    @DELETE
+    @Path("/group/delete")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteGroup(Group group) {
+        Group deleted = Repository.deleteGroup(group);
         return Response.status(200).entity(deleted).build();
     }
 }
