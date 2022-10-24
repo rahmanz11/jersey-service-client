@@ -1,4 +1,3 @@
-
 package alom.server;
 
 import javax.ws.rs.Consumes;
