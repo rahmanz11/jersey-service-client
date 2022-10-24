@@ -43,3 +43,6 @@ ___
 _____
     cd jersey-client
     mvn clean install
+
+## Run the REST Client
+    Run the ResourceClient.java file
