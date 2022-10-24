@@ -30,7 +30,7 @@ public class ServerResource {
      * @return
      */
     @GET 
-    @Path("/student/get")
+    @Path("/get-student")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getStudent(@QueryParam(value = "id") String id) {
         Student get = Repository.getStudent(Integer.valueOf(id));
@@ -43,7 +43,7 @@ public class ServerResource {
      * @return
      */
     @POST 
-    @Path("/student/add")
+    @Path("/add-student")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addStudent(Student student) {
@@ -57,10 +57,10 @@ public class ServerResource {
      * @return
      */
     @PUT
-    @Path("/student/update")
+    @Path("/update-student")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateSudent(Student student) {
+    public Response updateStudent(Student student) {
         Student updated = Repository.updateStudent(student);
         return Response.status(200).entity(updated).build();
     }
@@ -71,10 +71,10 @@ public class ServerResource {
      * @return
      */
     @DELETE
-    @Path("/student/delete")
+    @Path("/delete-student")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteSudent(Student student) {
+    public Response deleteStudent(Student student) {
         Student deleted = Repository.deleteStudent(student);
         return Response.status(204).entity(deleted).build();
     }
@@ -85,7 +85,7 @@ public class ServerResource {
      * @return
      */
     @GET 
-    @Path("/subject/get")
+    @Path("/get-subject")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSubject(@QueryParam(value = "id") String id) {
         Subject get = Repository.getSubject(Integer.valueOf(id));
@@ -98,7 +98,7 @@ public class ServerResource {
      * @return
      */
     @POST 
-    @Path("/subject/add")
+    @Path("/add-subject")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addSubject(Subject subject) {
@@ -112,7 +112,7 @@ public class ServerResource {
      * @return
      */
     @PUT
-    @Path("/subject/update")
+    @Path("/update-subject")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateSubject(Subject subject) {
@@ -126,7 +126,7 @@ public class ServerResource {
      * @return
      */
     @DELETE
-    @Path("/subject/delete")
+    @Path("/delete-subject")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteSubject(Subject subject) {
@@ -140,7 +140,7 @@ public class ServerResource {
      * @return
      */
     @GET 
-    @Path("/group/get")
+    @Path("/get-group")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getGroup(@QueryParam(value = "id") String id) {
         Group get = Repository.getGroup(Integer.valueOf(id));
@@ -153,7 +153,7 @@ public class ServerResource {
      * @return
      */
     @POST 
-    @Path("/group/add")
+    @Path("/add-group")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addGroup(Group group) {
@@ -167,7 +167,7 @@ public class ServerResource {
      * @return
      */
     @PUT
-    @Path("/group/update")
+    @Path("/update-group")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateGroup(Group group) {
@@ -181,7 +181,7 @@ public class ServerResource {
      * @return
      */
     @DELETE
-    @Path("/group/delete")
+    @Path("/delete-group")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteGroup(Group group) {
@@ -195,7 +195,7 @@ public class ServerResource {
      * @return
      */
     @POST
-    @Path("/group/student/add")
+    @Path("/add-student-group")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addStudentToTheGroup(StudentAndGroup studentAndGroup) {
@@ -209,7 +209,7 @@ public class ServerResource {
      * @return
      */
     @DELETE
-    @Path("/group/student/remove")
+    @Path("/remove-student-group")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response removeStudentFromTheGroup(StudentAndGroup studentAndGroup) {
@@ -223,7 +223,7 @@ public class ServerResource {
      * @return
      */
     @POST
-    @Path("/group/subjects/add")
+    @Path("/add-group-subjects")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response jointGroupWithSubjects(GroupAndSubjects groupAndSubjects) {
@@ -237,7 +237,7 @@ public class ServerResource {
      * @return
      */
     @DELETE
-    @Path("/group/subjects/remove")
+    @Path("/remove-group-subjects")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response disjointGroupFromSubjects(GroupAndSubjects groupAndSubjects) {
@@ -251,7 +251,7 @@ public class ServerResource {
      * @return
      */
     @POST
-    @Path("/student/subject/note/add")
+    @Path("/add-student-subject-note")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response giveNoteInASubjectToAStudent(Note note) {
@@ -265,7 +265,7 @@ public class ServerResource {
      * @return
      */
     @PUT
-    @Path("/student/subject/note/update")
+    @Path("/update-student-subject-note")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modifyNoteInASubjectToAStudent(Note note) {
@@ -279,7 +279,7 @@ public class ServerResource {
      * @return
      */
     @DELETE
-    @Path("/student/subject/note/delete")
+    @Path("/delete-student-subject-note")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteNoteInASubjectOfAStudent(Note note) {

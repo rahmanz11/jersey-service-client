@@ -24,73 +24,61 @@ public class ResourceClient {
 		String target = "http://localhost:8080/jersey-helloworld-server/rest/resource";
 
 		// add a new student
-		addNewStudent(client, String.format("%s/student/add", target));
+		addNewStudent(client, String.format("%s/add-student", target));
 
 		// get a student
-		getStudent(client, String.format("%s/student/get", target));
+		getStudent(client, String.format("%s/get-student", target));
 
 		// update a student
-		updateStudent(client, String.format("%s/student/update", target));
+		updateStudent(client, String.format("%s/update-student", target));
 		
 		// delete a student
-		deleteStudent(client, String.format("%s/student/delete", target));
+		deleteStudent(client, String.format("%s/delete-student", target));
 
 		// add a new subject
-		addNewSubject(client, String.format("%s/subject/add", target));
+		addNewSubject(client, String.format("%s/add-subject", target));
 
 		// get a subject
-		getSubject(client, String.format("%s/subject/get", target));
+		getSubject(client, String.format("%s/get-subject", target));
 
 		// update a subject
-		updateSubject(client, String.format("%s/subject/update", target));
+		updateSubject(client, String.format("%s/update-subject", target));
 		
 		// delete a subject
-		deleteSubject(client, String.format("%s/subject/delete", target));
-
-		// add a new subject
-		addNewSubject(client, String.format("%s/subject/add", target));
-
-		// get a subject
-		getSubject(client, String.format("%s/subject/get", target));
-
-		// update a subject
-		updateSubject(client, String.format("%s/subject/update", target));
-		
-		// delete a subject
-		deleteSubject(client, String.format("%s/subject/delete", target));
+		deleteSubject(client, String.format("%s/delete-subject", target));
 
 		// add a new group
-		addNewGroup(client, String.format("%s/group/add", target));
+		addNewGroup(client, String.format("%s/add-group", target));
 
 		// get a group
-		getGroup(client, String.format("%s/group/get", target));
+		getGroup(client, String.format("%s/get-group", target));
 
 		// update a group
-		updateGroup(client, String.format("%s/group/update", target));
+		updateGroup(client, String.format("%s/update-group", target));
 		
 		// delete a group
-		deleteGroup(client, String.format("%s/group/delete", target));
+		deleteGroup(client, String.format("%s/delete-group", target));
 
 		// add a student to a group
-		addStudentToTheGroup(client, String.format("%s/group/student/add", target));
+		addStudentToTheGroup(client, String.format("%s/add-student-group", target));
 
 		// remove a student to a group
-		removeStudentFromTheGroup(client, String.format("%s/group/student/remove", target));
+		removeStudentFromTheGroup(client, String.format("%s/remove-student-group", target));
 
 		// joint a group with subjects
-		jointGroupWithSubjects(client, String.format("%s/group/subjects/add", target));
+		jointGroupWithSubjects(client, String.format("%s/add-group-subjects", target));
 
 		// remove join between a group and subject
-		disjointGroupFromSubjects(client, String.format("%s/group/subjects/remove", target));
+		disjointGroupFromSubjects(client, String.format("%s/remove-group-subjects", target));
 
 		// Give note
-		giveNoteInASubjectToAStudent(client, String.format("%s/student/subject/note/add", target));
+		giveNoteInASubjectToAStudent(client, String.format("%s/add-student-subject-note", target));
 
 		// Update note
-		modifyNoteInASubjectToAStudent(client, String.format("%s/student/subject/note/update", target));
+		modifyNoteInASubjectToAStudent(client, String.format("%s/update-student-subject-note", target));
 
 		// Delete note
-		deleteNoteInASubjectOfAStudent(client, String.format("%s/student/subject/note/delete", target));
+		deleteNoteInASubjectOfAStudent(client, String.format("%s/delete-student-subject-note", target));
 	}
 
 	/**
@@ -102,11 +90,6 @@ public class ResourceClient {
 		WebResource webResource = client.resource(path);
 		Student input = new Student(1, "Adam", "Smith");
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, input);
-		if (response.getStatus() != 201) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		Student output = response.getEntity(Student.class);
 		System.out.println("Output from Server .... \n");
 		Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
@@ -122,11 +105,6 @@ public class ResourceClient {
 		int id = 1;
 		WebResource webResource = client.resource(path).queryParam("id", String.valueOf(id));
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-		if (response.getStatus() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		Student output = response.getEntity(Student.class);
 		System.out.println("Output from Server .... \n");
 		Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
@@ -143,11 +121,6 @@ public class ResourceClient {
 		WebResource webResource = client.resource(path);
 		Student input = new Student(1, "Adam", "Levine");
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, input);
-		if (response.getStatus() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		Student output = response.getEntity(Student.class);
 		System.out.println("Output from Server .... \n");
 		Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
@@ -164,11 +137,6 @@ public class ResourceClient {
 		WebResource webResource = client.resource(path);
 		Student input = new Student(1, "Adam", "Levine");
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).delete(ClientResponse.class, input);
-		if (response.getStatus() != 204) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		Student output = response.getEntity(Student.class);
 		System.out.println("Output from Server .... \n");
 		Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
@@ -184,11 +152,6 @@ public class ResourceClient {
 		WebResource webResource = client.resource(path);
 		Subject input = new Subject(1, "History");
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, input);
-		if (response.getStatus() != 201) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		Subject output = response.getEntity(Subject.class);
 		System.out.println("Output from Server .... \n");
 		Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
@@ -204,11 +167,6 @@ public class ResourceClient {
 		int id = 1;
 		WebResource webResource = client.resource(path).queryParam("id", String.valueOf(id));
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-		if (response.getStatus() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		Subject output = response.getEntity(Subject.class);
 		System.out.println("Output from Server .... \n");
 		Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
@@ -224,11 +182,6 @@ public class ResourceClient {
 		WebResource webResource = client.resource(path);
 		Subject input = new Subject(1, "Math");
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, input);
-		if (response.getStatus() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		Subject output = response.getEntity(Subject.class);
 		System.out.println("Output from Server .... \n");
 		Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
@@ -245,11 +198,6 @@ public class ResourceClient {
 		WebResource webResource = client.resource(path);
 		Subject input = new Subject(1, "Math");
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).delete(ClientResponse.class, input);
-		if (response.getStatus() != 204) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		Subject output = response.getEntity(Subject.class);
 		System.out.println("Output from Server .... \n");
 		Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
@@ -265,11 +213,6 @@ public class ResourceClient {
 		WebResource webResource = client.resource(path);
 		Group input = new Group(1, "Group-1");
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, input);
-		if (response.getStatus() != 201) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		Group output = response.getEntity(Group.class);
 		System.out.println("Output from Server .... \n");
 		Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
@@ -285,11 +228,6 @@ public class ResourceClient {
 		int id = 1;
 		WebResource webResource = client.resource(path).queryParam("id", String.valueOf(id));
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-		if (response.getStatus() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		Group output = response.getEntity(Group.class);
 		System.out.println("Output from Server .... \n");
 		Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
@@ -305,11 +243,6 @@ public class ResourceClient {
 		WebResource webResource = client.resource(path);
 		Group input = new Group(1, "Group-11");
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, input);
-		if (response.getStatus() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		Group output = response.getEntity(Group.class);
 		System.out.println("Output from Server .... \n");
 		Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
@@ -325,11 +258,6 @@ public class ResourceClient {
 		WebResource webResource = client.resource(path);
 		Group input = new Group(1, "Group-11");
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).delete(ClientResponse.class, input);
-		if (response.getStatus() != 204) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		Group output = response.getEntity(Group.class);
 		System.out.println("Output from Server .... \n");
 		Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
@@ -347,11 +275,6 @@ public class ResourceClient {
 		Group group = new Group(1, "Group-1");
 		StudentAndGroup studentAndGroup = new StudentAndGroup(student, group);
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, studentAndGroup);
-		if (response.getStatus() != 201) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		String output = response.getEntity(String.class);
 		System.out.println("Output from Server .... \n");
 		System.out.println(output);
@@ -368,11 +291,6 @@ public class ResourceClient {
 		Group group = new Group(1, "Group-1");
 		StudentAndGroup studentAndGroup = new StudentAndGroup(student, group);
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, studentAndGroup);
-		if (response.getStatus() != 204) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		String output = response.getEntity(String.class);
 		System.out.println("Output from Server .... \n");
 		System.out.println(output);
@@ -391,11 +309,6 @@ public class ResourceClient {
 		subjects.add(subject);
 		GroupAndSubjects groupAndSubjects = new GroupAndSubjects(group, subjects);
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, groupAndSubjects);
-		if (response.getStatus() != 201) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		String output = response.getEntity(String.class);
 		System.out.println("Output from Server .... \n");
 		System.out.println(output);
@@ -414,11 +327,6 @@ public class ResourceClient {
 		subjects.add(subject);
 		GroupAndSubjects groupAndSubjects = new GroupAndSubjects(group, subjects);
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).delete(ClientResponse.class, groupAndSubjects);
-		if (response.getStatus() != 204) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		String output = response.getEntity(String.class);
 		System.out.println("Output from Server .... \n");
 		System.out.println(output);
@@ -436,11 +344,6 @@ public class ResourceClient {
 		Subject subject = new Subject(1, "History");
 		Note note = new Note(student, subject, mark);
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, note);
-		if (response.getStatus() != 201) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		String output = response.getEntity(String.class);
 		System.out.println("Output from Server .... \n");
 		System.out.println(output);
@@ -458,11 +361,6 @@ public class ResourceClient {
 		Subject subject = new Subject(1, "History");
 		Note note = new Note(student, subject, mark);
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, note);
-		if (response.getStatus() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		String output = response.getEntity(String.class);
 		System.out.println("Output from Server .... \n");
 		System.out.println(output);
@@ -480,11 +378,6 @@ public class ResourceClient {
 		Subject subject = new Subject(1, "History");
 		Note note = new Note(student, subject, mark);
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).delete(ClientResponse.class, note);
-		if (response.getStatus() != 204) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
 		String output = response.getEntity(String.class);
 		System.out.println("Output from Server .... \n");
 		System.out.println(output);
