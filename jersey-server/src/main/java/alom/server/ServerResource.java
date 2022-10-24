@@ -1,5 +1,7 @@
 package alom.server;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -14,6 +16,8 @@ import javax.ws.rs.core.Response;
 import alom.server.payload.Group;
 import alom.server.payload.GroupAndSubjects;
 import alom.server.payload.Note;
+import alom.server.payload.Result;
+import alom.server.payload.Results;
 import alom.server.payload.Student;
 import alom.server.payload.StudentAndGroup;
 import alom.server.payload.Subject;
@@ -285,5 +289,18 @@ public class ServerResource {
     public Response deleteNoteInASubjectOfAStudent(Note note) {
         String message = Repository.deleteNoteInASubjectOfAStudent(note.getStudent(), note.getSubject());
         return Response.status(204).entity(message).build();
+    }
+        
+    /**
+     * Show results
+     * @param Note
+     * @return
+     */
+    @GET
+    @Path("/show-results")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response showResults() {
+        Results results = Repository.showResults();
+        return Response.status(200).entity(results).build();
     }
 }

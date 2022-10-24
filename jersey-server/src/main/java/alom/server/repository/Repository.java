@@ -1,14 +1,20 @@
 package alom.server.repository;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import alom.server.payload.Group;
 import alom.server.payload.GroupAndSubjects;
 import alom.server.payload.Note;
+import alom.server.payload.Result;
+import alom.server.payload.Results;
 import alom.server.payload.Student;
 import alom.server.payload.StudentAndGroup;
 import alom.server.payload.Subject;
@@ -305,5 +311,38 @@ public class Repository implements Serializable {
       }
     }
     return "Success";
+  }
+
+  public static Results showResults() {
+    Results results = null;
+    List<Result> resultList = new ArrayList<>();
+    for (Student std : students) {
+      Result result = new Result();
+      result.setStudent(std);
+      for (StudentAndGroup sg : studentAndGroup) {
+        if (sg.getStudent().getId() == std.getId()) {
+          result.setGroup(sg.getGroup());
+          for (GroupAndSubjects gs : groupAndSubjects) {
+            if (gs.getGroup().getId() == sg.getGroup().getId()) {
+              for (Subject sub : gs.getSubjects()) {
+                Map<Subject, Integer> map = new HashMap<>();
+                for (Note note : notes) {
+                  if (note.getStudent().getId() == std.getId() && note.getSubject().getId() == sub.getId()) {
+                    map.put(sub, note.getNote());
+                  }
+                }
+                result.setSubjectAndNote(map); 
+              }
+            }
+          }
+        }
+      }
+      resultList.add(result);
+    }
+
+    if (resultList.size() > 0) {
+      results = new Results(resultList);
+    }
+    return results;
   }
 }

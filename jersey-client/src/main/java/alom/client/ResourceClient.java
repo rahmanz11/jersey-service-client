@@ -79,6 +79,9 @@ public class ResourceClient {
 
 		// Delete note
 		deleteNoteInASubjectOfAStudent(client, String.format("%s/delete-student-subject-note", target));
+
+		// Show results
+		showResults(client, String.format("%s/show-results", target));
 	}
 
 	/**
@@ -110,7 +113,6 @@ public class ResourceClient {
 		Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
 		System.out.println(gson.toJson(output));
 	}
-
 	
 	/**
 	 * Update a student
@@ -126,7 +128,6 @@ public class ResourceClient {
 		Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
 		System.out.println(gson.toJson(output));
 	}
-
 		
 	/**
 	 * Delete a student
@@ -381,5 +382,20 @@ public class ResourceClient {
 		String output = response.getEntity(String.class);
 		System.out.println("Output from Server .... \n");
 		System.out.println(output);
+	}
+
+	
+	/**
+	 * Show results
+	 * @param client
+	 */
+	static void showResults(Client client, String path) {
+		System.out.println("showResults");
+		WebResource webResource = client.resource(path);
+		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+		Results output = response.getEntity(Results.class);
+		System.out.println("Output from Server .... \n");
+		Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
+		System.out.println(gson.toJson(output));
 	}
 }
